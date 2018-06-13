@@ -68,7 +68,7 @@ Topic :: Software Development :: Testing
 '''.strip().splitlines()
 
 meta = dict(
-    name='python-afl',
+    name='python-afl-ph4',
     version=get_version(),
     license='MIT',
     description='American Fuzzy Lop fork server and instrumentation for pure-Python code',
