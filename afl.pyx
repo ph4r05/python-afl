@@ -119,15 +119,11 @@ def _trace_offset(offset, ignore_prev, preserve_prev):
     afl_area[offset] += 1
 
 
-
 cdef object _trace_buff
 def _trace_buff(const char *buff, ignore_prev, preserve_prev):
     global prev_location, tstl_mode
     location = (lhash(buff, 0) % MAP_SIZE)
-    offset = location ^ prev_location if not ignore_prev else location
-    if not preserve_prev:
-        prev_location = location // 2
-    afl_area[offset] += 1
+    _trace_offset(location, ignore_prev, preserve_prev)
 
 
 cdef int except_signal_id = 0
