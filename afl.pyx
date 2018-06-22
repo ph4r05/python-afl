@@ -119,13 +119,6 @@ def _trace_offset(offset, ignore_prev, preserve_prev):
     afl_area[offset] += 1
 
 
-cdef object _trace_buff
-def _trace_buff(const char *buff, ignore_prev, preserve_prev):
-    global prev_location, tstl_mode
-    location = (lhash(buff, 0) % MAP_SIZE)
-    _trace_offset(location, ignore_prev, preserve_prev)
-
-
 cdef int except_signal_id = 0
 cdef object except_signal_name = os.getenv('PYTHON_AFL_SIGNAL') or '0'
 if except_signal_name.isdigit():
@@ -258,10 +251,6 @@ def hash32(buff, offset=0):
     return lhash(buff, offset)
 
 
-def trace_buff(buff, ignore_prev=False, preserve_prev=False):
-    _trace_buff(buff, ignore_prev, preserve_prev)
-
-
 def trace_offset(offset, ignore_prev=False, preserve_prev=False):
     _trace_offset(offset, ignore_prev, preserve_prev)
 
@@ -274,7 +263,6 @@ __all__ = [
     'init',
     'loop',
     'hash32',
-    'trace_buff',
     'trace_offset',
     'install_default_trace',
 ]
